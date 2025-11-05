@@ -1,52 +1,72 @@
 ---
-title: "AI Research Agent Architecture"
+title: "Deep Research Agent Architecture"
 description: "How to design robust, multi-source research agents for competitive intelligence, hybrid retrieval, and low-latency synthesis."
 ---
 
-# Deep Research Agent Architecture
+<Info>
+Business Use Case: Automated competitive intelligence and multi-source research for strategic decision making
+</Info>
 
-The **Research Layer** executes complex, multi-source retrieval, ranking, and evidence synthesis at enterprise scale. Essential for due diligence, market monitoring, and real-time intelligence.
-
-## Data Flow
+## Deep Research Architecture
 
 ```text
-   [Task/Query/Event]
-         ↓
-    [Workflow Orchestrator]
-         ↓
- [Discovery & Hybrid Retrieval]
-   ↙                ↘
-[SERP][Feeds][Archive]    [APIs]
-   ↘       ↙      ↘
-  [Relevance/Ranking/Semantic Filter]
-         ↓
-     [Extraction/Parsing]
-         ↓
-    [Synthesis Engine (LLM/Rules)]
-         ↓
-      [Fact-check/Validate]
-         ↓
-      [Results/API]
+[Raw Data (API/CSV)]
+        ↓
+  [Normalization & Validation]
+        ↓
+   [Parallel Enrichment Controller]
+       ↙        ↓        ↘
+ [LinkedIn] [Crunchbase] [Website/API]
+      ↘         ↓         ↙
+   [Aggregation & Deduplication]
+        ↓
+  [Embeddings/Vector Cache]
+        ↓
+ [Output: CRM, Dashboard, API]
 ```
 
-### Hybrid Retrieval & Synthesis
+<Info>
+Example Implementation: Hebbia research platform, Perplexity Pro business research, AlphaSense-style market intelligence systems
+</Info>
 
-- **Multi-engine discovery:** Google/Bing, vertical APIs, internal documents, historic web archives.
-- **Ranking:** ML-driven evidence scoring; keyword+embedding hybrid ranking.
-- **Latency:** Targets p95 <3s for queries (<500ms source lookup with aggressive concurrency).
-- **Proof:** Benchmark: 98% source coverage of target Fortune 1000 domains.
+## Best Practices for Production-Grade research
 
-### Best Practices
+- **SERP API**: Use for search engine data (Google, Bing, etc.) with no proxy or CAPTCHA management required. Choose parsed JSON for structured results, or raw HTML/Markdown as needed.
+- **Async Mode**: For high-volume or slow queries, enable async requests for 99.99% success and best throughput. Async is recommended for large research jobs and batch processing.
+- **Pay for Success**: Only successful requests are billed. Parsing, proxy management, and unlocking are included in the price.
+- **Troubleshooting**: For 429 errors, reduce concurrency or switch to async. Use engine-specific parameters for best results. See parsed JSON schema for advanced analytics.
 
-- Use hybrid SERP + vector search for maximum coverage.
-- Always cache high-value retrievals with expiry.
-- Chain-of-thought LLM for structured, multi-source analysis.
 
-## Reference Code
+## The Difference
 
-```python
-from brightdata import ResearchAgent
-agent = ResearchAgent()
-result = agent.query("AI startup funding 2024")
-print(result["summary"])
-```
+<CardGroup cols={2}>
+
+  <Card title="BASIC RESEARCH TOOLS" icon="sparkles" href="/research/">
+      Surface-level data collection only, missing deep insights
+      
+      No historical context or web archive access
+      
+      Blocked on complex interactive sites and forms
+      
+      Limited to 1K concurrent source processing jobs
+      
+      Manual workflow orchestration and error handling
+      
+      High failure rates on protected or dynamic sources
+  </Card>
+  
+  <Card title="BRIGHT DATA POWERED RESEARCH STACK" icon="database" href="/research/">
+    Deep multi-source analysis with real-time and historical data
+    
+    2PB+ historical archive access for context-rich research
+    
+    Handles complex site interaction via browser automation and unblocking
+    
+    20K+ concurrent extraction operations with 99.99% uptime
+    
+    Automated, resilient multi-step research workflows
+    
+    Global proxy network ensures access to any source, anywhere
+   
+  </Card>
+</CardGroup>

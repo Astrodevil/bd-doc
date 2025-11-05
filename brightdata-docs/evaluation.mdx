@@ -1,15 +1,15 @@
 ---
 title: "AI Evaluation & Grounding Agent"
-description: "Fact-check and validate LLM/AI outputs with automated, multi-source evidence—at massive scale."
+description: "Evaluate and ground LLM outputs with automated, multi-source fact-checking and authoritative evidence at enterprise scale."
 ---
 
 <Info>
-Business use case: Automated CRM data completion and lead enrichment for sales teams
+Business use case: Real-time fact-checking and automated LLM output validation in production AI applications
 </Info>
 
-The **Enrichment Layer** automates ingestion, normalization, validation, and augmentation of company and contact records at scale. Designed for real-time and batch workflows.
+## Evaluation & Grounding Architecture
 
-## Enrichment Architecture and Data Flow
+This reference pipeline normalizes raw inputs, enriches them across authoritative sources, aggregates and de-duplicates results, caches embeddings for fast retrieval, and exports verified outputs to downstream systems.
 
 ```text
 [Raw Data (API/CSV)]
@@ -28,46 +28,37 @@ The **Enrichment Layer** automates ingestion, normalization, validation, and aug
 ```
 
 <Info>
-Example implementations: Clay.com enrichment workflows, Apollo.io contact discovery, and ZoomInfo-style lead completion platforms
+Example Implementation: Braintrust evaluation platform, LangSmith testing framework, custom LLM validation systems for enterprise AI
 </Info>
 
-## Best Practices for Production-Grade Enrichment
 
-- **Bright Data Web Unlocker**: Use for high-scale, non-interactive scraping. Pay only for successful requests. Automatically manages proxies, headers, fingerprinting, and CAPTCHAs.
-- **Async mode for scale**: For large batches or high concurrency, enable async requests to maximize throughput and reliability. Recommended for 1K+ parallel jobs to avoid 429 errors.
-- **Bright Data Browser API**: When interacting with dynamic sites (fill forms, click, scroll), use full browser automation at scale. Integrates with Puppeteer, Playwright, and Selenium.
-- **Troubleshooting strategy**: If direct API endpoint scraping fails, target the main webpage. For complex cases, use the Browser API to observe and replay frontend API calls.
-
-
-## Explore Reference Architectures
+## The Difference
 
 <CardGroup cols={2}>
 
-  <Card title="STANDARD SCRAPING STACK" icon="sparkles" href="/enrichment/">
-      ~50% success on LinkedIn profiles due to anti-bot measures
+  <Card title="SURFACE-LEVEL VALIDATION" icon="sparkles" href="/evaluation/">
+      Limited access to authoritative sources and narrow coverage
       
-      Slow SERP responses (2–5 seconds) limit throughput
+      No historical verification or archived web context
       
-      Rate limits and IP bans break batch processing at scale
+      Single-source checks only, higher error rates
       
-      Manual proxy management raises operational risk
+      Manual validation workflow, no automation
       
-      Lacks enterprise compliance and auditability
+      Lacks enterprise-grade scale, monitoring, and compliance
       
-      Unreliable above 1K concurrent jobs
+      Degrades beyond ~1K concurrent validations
   </Card>
   
-  <Card title="BRIGHT DATA STACK" icon="database" href="/enrichment/">
-    95%+ enrichment success, including protected sites
+  <Card title="Bright Data validation stack" icon="database" href="/evaluation/">
+    Broad coverage across authoritative sources, real-time and historical
     
-    50K+ concurrent extractions with 99.99% uptime
+    Historical context via a 2PB+ archived web corpus
     
-    Automated proxy rotation, unblocking, and CAPTCHA solving
+    Automated, multi-source cross-referencing with cited evidence
     
-    GDPR/CCPA-ready with enterprise-grade security controls
+    Enterprise-grade accuracy, reliability, observability, and compliance
     
-    Global network of 150M+ IPs for broad market coverage
-    
-    Trusted by Fortune 500s for mission-critical enrichment
+    Automated infrastructure with monitoring, alerting, and support
   </Card>
 </CardGroup>
