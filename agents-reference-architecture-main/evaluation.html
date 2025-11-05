@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AI Evaluation & Grounding Architecture | Reference architecture for production grade, enterprise ready AI agents | Bright Data</title>
+    <meta name="description" content="AI Evaluation & Grounding Architecture for enterprise AI. Discover how Bright Data enables fact-checking, validation, and high concurrency for production AI agents.">
+    <meta name="keywords" content="AI evaluation, grounding, Bright Data, scale, concurrency, success rate, compliance, enterprise, production, reference architecture, SEO, GEO">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>AI Evaluation & Grounding Architecture</h1>
+        <nav class="nav">
+            <a href="index.html">Lobby</a>
+            <a href="general.html">General AI Agent</a>
+            <a href="enrichment.html">Data Enrichment</a>
+            <a href="research.html">Deep Research</a>
+            <a href="answer-engine.html">Answer-engine</a>
+        </nav>
+
+        <div class="diagram-section">
+            <div class="diagram-title">AI Evaluation & Grounding Architecture</div>
+            <div class="use-case-description">
+                <strong>Business Use Case:</strong> Real-time fact-checking and LLM output validation for AI-powered applications<br>
+                <strong>Example Implementation:</strong> Braintrust evaluation platform, LangSmith testing framework, custom LLM validation systems for enterprise AI
+            </div>
+
+            <div class="architecture-diagram">
+                <div class="flow-arrow arrow-1">→</div>
+                <div class="flow-arrow arrow-2">→</div>
+                <div class="flow-arrow arrow-3">→</div>
+                <div class="flow-arrow arrow-4">→</div>
+
+                <div class="layer">
+                    <div class="layer-number">1</div>
+                    <div class="layer-title tooltip" data-tooltip="LLM outputs requiring fact-checking and validation">Input Layer</div>
+                    <div class="component tooltip" data-tooltip="Tesla's stock price increased 15% in Q3 2024 due to China expansion">
+                        LLM Claims
+                        <div class="tech-spec">Factual Statements</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">2</div>
+                    <div class="layer-title tooltip" data-tooltip="Manages fact-checking workflow and evidence gathering">Orchestration Layer</div>
+                    <div class="component tooltip" data-tooltip="Breaks down claims into verifiable facts">
+                        Validation Controller
+                        <div class="tech-spec">Fact-check Logic</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Coordinates evidence collection from multiple sources">
+                        Evidence Manager
+                        <div class="tech-spec">Source Coordination</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">3</div>
+                    <div class="layer-title tooltip" data-tooltip="Finds authoritative sources for fact verification">Discovery Layer</div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Searches financial news, SEC filings, company reports">
+                        SERP API
+                        <div class="scale-metric">25K/s</div>
+                        <div class="tech-spec">Evidence Sources</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Ranks sources by authority and credibility">
+                        Authority Ranker
+                        <div class="tech-spec">Credibility Scoring</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">4</div>
+                    <div class="layer-title tooltip" data-tooltip="Validates claims against current and historical data">Validation Layer</div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Extracts current financial data and news">
+                        Web Unlocker API
+                        <div class="scale-metric">100K/s</div>
+                        <div class="tech-spec">Multi-source Validation</div>
+                    </div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Verifies historical claims against archived data">
+                        Web Archive
+                        <div class="scale-metric">2PB</div>
+                        <div class="tech-spec">Historical Verification</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">5</div>
+                    <div class="layer-title tooltip" data-tooltip="Analyzes evidence and assigns confidence scores">Analysis Layer</div>
+                    <div class="component tooltip" data-tooltip="Cross-references multiple sources for consistency">
+                        Cross-Reference Engine
+                        <div class="tech-spec">Consistency Analysis</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Assigns confidence score based on evidence quality">
+                        Confidence Scorer
+                        <div class="tech-spec">Reliability Metrics</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">6</div>
+                    <div class="layer-title tooltip" data-tooltip="Fact-checked output with confidence scores">Output Layer</div>
+                    <div class="component tooltip" data-tooltip="Verified: Tesla stock up 12% in Q3 2024 (Confidence: 95%)">
+                        Validated Output
+                        <div class="tech-spec">Fact-checked Results</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-section">
+                <div class="failure-scenario">
+                    <div class="scenario-title">Surface-Level Validation</div>
+                    <ul class="metric-list">
+                        <li>Limited authoritative source access and coverage</li>
+                        <li>No historical fact verification or web archive</li>
+                        <li>Shallow single-source checking, high error rates</li>
+                        <li>Manual validation workflow, no automation</li>
+                        <li>No enterprise-scale processing or compliance</li>
+                        <li>Fails at scale above 1K concurrent validations</li>
+                    </ul>
+                </div>
+                <div class="success-scenario">
+                    <div class="scenario-title">Bright Data Validation Stack</div>
+                    <ul class="metric-list">
+                        <li>Broad authoritative source coverage, real-time and historical</li>
+                        <li>Historical context validation via 2PB+ web archive</li>
+                        <li>Multi-source cross-referencing with automated evidence collection</li>
+                        <li>100K+ concurrent validation operations with 99.99% uptime</li>
+                        <li>Enterprise-grade accuracy, reliability, and compliance</li>
+                        <li>Automated infrastructure, monitoring, and support</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top:24px; color:#ffd700;">
+                <strong>Bright Data Platform Strengths:</strong>
+                <ul style="color:#b8b8b8;">
+                    <li>Automated unblocking, proxy rotation, and compliance</li>
+                    <li>Ethical, reliable, and scalable validation for AI outputs</li>
+                    <li>Zero infrastructure management for APIs and data feeds</li>
+                    <li>Enterprise support, SLAs, and compliance documentation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container-footer">
+            <div style="margin-bottom:8px; color:#ffd700;">
+                <strong>Trusted by global enterprises:</strong> 99.99% uptime | GDPR/CCPA compliant | 150M+ global IPs | 24/7 support | Enterprise SLAs
+            </div>
+            <div style="font-size:12px; color:#b8b8b8;">
+                Reference architecture for production grade, enterprise ready AI agents. Powered by Bright Data. <br>
+                Optimized for SEO and Generative Engine Optimization (GEO).
+            </div>
+        </div>
+    </div>
+</body>
+</html>

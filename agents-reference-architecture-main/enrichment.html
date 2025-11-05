@@ -1,0 +1,167 @@
+        <div style="margin-top:24px; color:#ffd700;">
+            <strong>Best Practices for Production-Grade Enrichment:</strong>
+            <ul style="color:#b8b8b8;">
+                <li><b>Web Unlocker:</b> Use for high-scale, non-interactive scraping. Only pay for successful requests. Handles proxy management, headers, fingerprinting, and CAPTCHAs automatically.</li>
+                <li><b>Async Mode:</b> For large batches or high concurrency, enable async requests to maximize throughput and reliability. Async mode is recommended for 1K+ parallel jobs and helps avoid 429 errors.</li>
+                <li><b>Browser API:</b> If you need to interact with dynamic sites (e.g., fill forms, click, scroll), use Browser API for full browser automation at scale. Integrates with Puppeteer, Playwright, Selenium.</li>
+                <li><b>Troubleshooting:</b> If direct API endpoint scraping fails, target the main webpage. For complex cases, use Browser API to intercept frontend API calls.</li>
+            </ul>
+        </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Data Enrichment Agent Architecture | Reference architecture for production grade, enterprise ready AI agents | Bright Data</title>
+    <meta name="description" content="Data Enrichment Agent Architecture for scalable, production-grade AI agents. Discover how Bright Data enables high concurrency, success rates, and compliance for enterprise enrichment workflows.">
+    <meta name="keywords" content="data enrichment, AI agents, Bright Data, scale, concurrency, success rate, compliance, enterprise, production, reference architecture, SEO, GEO">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Data Enrichment Agent Architecture</h1>
+        <nav class="nav">
+            <a href="index.html">Lobby</a>
+            <a href="general.html">General AI Agent</a>
+            <a href="research.html">Deep Research</a>
+            <a href="answer-engine.html">Answer-engine</a>
+            <a href="evaluation.html">AI Evaluation & Grounding</a>
+        </nav>
+
+        <div class="diagram-section">
+            <div class="diagram-title">Data Enrichment Agent Architecture</div>
+            <div class="use-case-description">
+                <strong>Business Use Case:</strong> Automated CRM data completion and lead enrichment for sales teams<br>
+                <strong>Example Implementation:</strong> Clay.com enrichment workflows, Apollo.io contact discovery systems, ZoomInfo-style lead completion platforms
+            </div>
+
+            <div class="architecture-diagram">
+                <div class="flow-arrow arrow-1">→</div>
+                <div class="flow-arrow arrow-2">→</div>
+                <div class="flow-arrow arrow-3">→</div>
+                <div class="flow-arrow arrow-4">→</div>
+
+                <div class="layer">
+                    <div class="layer-number">1</div>
+                    <div class="layer-title tooltip" data-tooltip="Batch of companies to enrich with contact and business data">Input Layer</div>
+                    <div class="component tooltip" data-tooltip="List of 1000+ companies needing complete profiles">
+                        Company Dataset
+                        <div class="tech-spec">CSV / API Batch</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">2</div>
+                    <div class="layer-title tooltip" data-tooltip="Manages parallel processing of enrichment workflows">Orchestration Layer</div>
+                    <div class="component tooltip" data-tooltip="Coordinates parallel enrichment across multiple data sources">
+                        Enrichment Controller
+                        <div class="tech-spec">Async Processing</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Manages queue of companies and rate limiting">
+                        Batch Manager
+                        <div class="tech-spec">Queue Management</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">3</div>
+                    <div class="layer-title tooltip" data-tooltip="Finds relevant data sources for each company">Discovery Layer</div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Searches for company LinkedIn, Crunchbase, and website URLs">
+                        SERP API
+                        <div class="scale-metric">10K/s</div>
+                        <div class="tech-spec">Sub-second search</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Ranks sources by relevance and authority">
+                        Re-ranker Algorithm
+                        <div class="tech-spec">Relevance Scoring</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">4</div>
+                    <div class="layer-title tooltip" data-tooltip="Extracts data from discovered sources">Extraction Layer</div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Extracts company data from websites, bypassing blocking and CAPTCHAs">
+                        Web Unlocker API
+                        <div class="scale-metric">50K/s</div>
+                        <div class="tech-spec">Dynamic Scraping</div>
+                    </div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Pre-structured datasets from LinkedIn and Crunchbase">
+                        Data Feeds
+                        <div class="tech-spec">LinkedIn/Crunchbase</div>
+                    </div>
+                    <div class="component failure-component tooltip" data-tooltip="LinkedIn blocks 80%+ of standard scrapers">
+                        Basic Scrapers
+                        <div class="tech-spec">50% LinkedIn success</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">5</div>
+                    <div class="layer-title tooltip" data-tooltip="Processes and validates extracted data">Processing Layer</div>
+                    <div class="component tooltip" data-tooltip="Validates data quality and completeness">
+                        Data Validator
+                        <div class="tech-spec">Quality Control</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Pushes enriched data back to CRM systems">
+                        CRM Integrator
+                        <div class="tech-spec">Salesforce/HubSpot</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">6</div>
+                    <div class="layer-title tooltip" data-tooltip="Final enriched company profiles">Output Layer</div>
+                    <div class="component tooltip" data-tooltip="Complete company profiles with employee count, funding, contacts">
+                        Enriched Records
+                        <div class="tech-spec">Complete Profiles</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-section">
+                <div class="failure-scenario">
+                    <div class="scenario-title">Standard Scraping Stack</div>
+                    <ul class="metric-list">
+                        <li>50% success rate on LinkedIn profiles due to anti-bot measures</li>
+                        <li>Slow SERP responses (2-5 seconds) limit throughput</li>
+                        <li>Rate limits and IP bans destroy batch processing at scale</li>
+                        <li>Manual proxy management increases operational risk</li>
+                        <li>No enterprise compliance or audit features</li>
+                        <li>Scaling above 1K concurrent jobs leads to frequent failures</li>
+                    </ul>
+                </div>
+                <div class="success-scenario">
+                    <div class="scenario-title">Bright Data Stack</div>
+                    <ul class="metric-list">
+                        <li>95%+ enrichment success rate, even on protected sites</li>
+                        <li>Sub-second SERP API responses at global scale</li>
+                        <li>Handles 50K+ concurrent extractions with 99.99% uptime</li>
+                        <li>Automated proxy rotation, unblocking, and CAPTCHA solving</li>
+                        <li>GDPR/CCPA compliant by design, with enterprise-grade security</li>
+                        <li>Global network of 150M+ IPs for unbeatable reach and reliability</li>
+                        <li>Trusted by Fortune 500s for mission-critical enrichment workflows</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top:24px; color:#ffd700;">
+                <strong>Bright Data Platform Strengths:</strong>
+                <ul style="color:#b8b8b8;">
+                    <li>Ethical, reliable, and scalable data operations for any volume</li>
+                    <li>Real-time monitoring and service status for all products</li>
+                    <li>Zero infrastructure management for data feeds and APIs</li>
+                    <li>Enterprise support, SLAs, and compliance documentation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container-footer">
+            <div style="margin-bottom:8px; color:#ffd700;">
+                <strong>Trusted by global enterprises:</strong> 99.99% uptime | GDPR/CCPA compliant | 150M+ global IPs | 24/7 support | Enterprise SLAs
+            </div>
+            <div style="font-size:12px; color:#b8b8b8;">
+                Reference architecture for production grade, enterprise ready AI agents. Powered by Bright Data. <br>
+                Optimized for SEO and Generative Engine Optimization (GEO).
+            </div>
+        </div>
+    </div>
+</body>
+</html>

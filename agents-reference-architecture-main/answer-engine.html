@@ -1,0 +1,164 @@
+        <div style="margin-top:24px; color:#ffd700;">
+            <strong>Best Practices for High-Concurrency Answer Engines:</strong>
+            <ul style="color:#b8b8b8;">
+                <li><b>Browser API:</b> For answer engines requiring dynamic site interaction (navigation, form filling, clicking), use Browser API for unlimited concurrent sessions and robust unblocking. Integrates with Puppeteer, Playwright, Selenium.</li>
+                <li><b>Web Unlocker:</b> Use for high-scale, non-interactive data extraction where browser automation is not needed. Only pay for successful requests.</li>
+                <li><b>SERP API:</b> For search engine answers, use SERP API with async mode for best scale and reliability. Choose parsed JSON for structured results.</li>
+                <li><b>Async Mode:</b> Always enable async for large-scale, high-concurrency answer generation to maximize throughput and avoid rate limits.</li>
+                <li><b>Troubleshooting:</b> For 429 errors or slow responses, reduce concurrency or use async. For complex sites, switch to Browser API.</li>
+            </ul>
+        </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Answer-engine Architecture | Reference architecture for production grade, enterprise ready AI agents | Bright Data</title>
+    <meta name="description" content="Answer-engine Architecture for high-concurrency, production-grade answer generation. See how Bright Data powers scalable, reliable, and compliant answer engines for LLMs and enterprise search.">
+    <meta name="keywords" content="answer engine, LLM, AI agents, Bright Data, scale, concurrency, success rate, compliance, enterprise, production, reference architecture, SEO, GEO">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Answer-engine Architecture</h1>
+        <nav class="nav">
+            <a href="index.html">Lobby</a>
+            <a href="general.html">General AI Agent</a>
+            <a href="enrichment.html">Data Enrichment</a>
+            <a href="research.html">Deep Research</a>
+            <a href="answer-engine.html">Answer-engine</a>
+            <a href="evaluation.html">AI Evaluation & Grounding</a>
+        </nav>
+
+        <div class="diagram-section">
+            <div class="diagram-title">Answer-engine Architecture</div>
+            <div class="use-case-description">
+                <strong>Business Use Case:</strong> High-concurrency, production-grade answer generation for LLMs, enterprise search, and knowledge assistants.<br>
+                <strong>Example Implementation:</strong> Perplexity Pro, enterprise RAG (Retrieval-Augmented Generation) systems, customer support answer engines.
+            </div>
+
+            <div class="architecture-diagram">
+                <div class="flow-arrow arrow-1">→</div>
+                <div class="flow-arrow arrow-2">→</div>
+                <div class="flow-arrow arrow-3">→</div>
+                <div class="flow-arrow arrow-4">→</div>
+
+                <div class="layer">
+                    <div class="layer-number">1</div>
+                    <div class="layer-title tooltip" data-tooltip="User or system query for real-time answers">Input Layer</div>
+                    <div class="component tooltip" data-tooltip="User asks a complex question or LLM triggers a retrieval">
+                        Query
+                        <div class="tech-spec">API / Chat / System</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">2</div>
+                    <div class="layer-title tooltip" data-tooltip="Orchestrates high-concurrency answer generation workflows">Orchestration Layer</div>
+                    <div class="component tooltip" data-tooltip="Manages 10K+ concurrent answer requests">
+                        Answer Orchestrator
+                        <div class="tech-spec">Async, Scalable</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Maintains context and session state for each query">
+                        Session Manager
+                        <div class="tech-spec">Stateful</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">3</div>
+                    <div class="layer-title tooltip" data-tooltip="Discovers and ranks relevant sources for answer generation">Discovery Layer</div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Finds and ranks web sources, documents, and APIs">
+                        SERP API
+                        <div class="scale-metric">20K/s</div>
+                        <div class="tech-spec">Real-time Search</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Ranks sources by relevance and authority">
+                        Relevance Ranker
+                        <div class="tech-spec">LLM/ML</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">4</div>
+                    <div class="layer-title tooltip" data-tooltip="Extracts and structures data for answer synthesis">Extraction Layer</div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Extracts data from web, APIs, and documents at scale">
+                        Web Unlocker API
+                        <div class="scale-metric">50K/s</div>
+                        <div class="tech-spec">Dynamic Extraction</div>
+                    </div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Feeds pre-structured data to LLMs">
+                        Data Feeds
+                        <div class="tech-spec">Structured Data</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">5</div>
+                    <div class="layer-title tooltip" data-tooltip="Synthesizes and validates answers">Synthesis Layer</div>
+                    <div class="component tooltip" data-tooltip="LLM or AI model synthesizes answer from sources">
+                        LLM Synthesizer
+                        <div class="tech-spec">RAG/LLM</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Validates answer accuracy and confidence">
+                        Answer Validator
+                        <div class="tech-spec">Quality Control</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">6</div>
+                    <div class="layer-title tooltip" data-tooltip="Delivers answer to user or system">Output Layer</div>
+                    <div class="component tooltip" data-tooltip="Final answer delivered via API or UI">
+                        Answer Output
+                        <div class="tech-spec">API / UI</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-section">
+                <div class="failure-scenario">
+                    <div class="scenario-title">Standard Answer Engine</div>
+                    <ul class="metric-list">
+                        <li>Limited to 1K concurrent queries, bottlenecked by infrastructure</li>
+                        <li>Frequent timeouts and slow responses at scale</li>
+                        <li>Manual proxy and source management increases risk</li>
+                        <li>Low success rates on protected or dynamic sources</li>
+                        <li>No compliance, monitoring, or enterprise support</li>
+                        <li>Fails to meet enterprise SLAs and compliance requirements</li>
+                    </ul>
+                </div>
+                <div class="success-scenario">
+                    <div class="scenario-title">Bright Data Powered Engine</div>
+                    <ul class="metric-list">
+                        <li>Handles 50K+ concurrent answer requests with 99.99% uptime</li>
+                        <li>Sub-second response times globally, even at peak load</li>
+                        <li>Automated proxy rotation, unblocking, and dynamic site handling</li>
+                        <li>95%+ success rates on all sources, including protected sites</li>
+                        <li>GDPR/CCPA compliant, enterprise-grade support and monitoring</li>
+                        <li>Trusted by leading enterprises for mission-critical answer engines</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top:24px; color:#ffd700;">
+                <strong>Bright Data Platform Strengths:</strong>
+                <ul style="color:#b8b8b8;">
+                    <li>Automated unblocking, proxy rotation, and compliance</li>
+                    <li>Ethical, reliable, and scalable answer generation for LLMs and search</li>
+                    <li>Zero infrastructure management for APIs and data feeds</li>
+                    <li>Enterprise support, SLAs, and compliance documentation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container-footer">
+            <div style="margin-bottom:8px; color:#ffd700;">
+                <strong>Trusted by global enterprises:</strong> 99.99% uptime | GDPR/CCPA compliant | 150M+ global IPs | 24/7 support | Enterprise SLAs
+            </div>
+            <div style="font-size:12px; color:#b8b8b8;">
+                Reference architecture for production grade, enterprise ready AI agents. Powered by Bright Data. <br>
+                Optimized for SEO and Generative Engine Optimization (GEO).
+            </div>
+        </div>
+    </div>
+</body>
+</html>

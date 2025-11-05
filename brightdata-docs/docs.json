@@ -1,0 +1,77 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "AI Agents Reference Architecture",
+  "colors": {
+    "primary": "#ffb300",
+    "light": "#ffd700",
+    "dark": "#ff8c00"
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "index"
+            ]
+          },
+          {
+            "group": "Architecture Patterns",
+            "pages": [
+              "enrichment",
+              "research",
+              "answer-engine"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Documentation",
+          "href": "https://docs.brightdata.com",
+          "icon": "book-open-cover"
+        },
+        {
+          "anchor": "Community",
+          "href": "https://brightdata.com/slack",
+          "icon": "slack"
+        },
+        {
+          "anchor": "Contact Sales",
+          "href": "https://brightdata.com/contact",
+          "icon": "envelope"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png",
+    "href": "https://brightdata.com"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Bright Data",
+        "href": "https://brightdata.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Start Free Trial",
+      "href": "https://brightdata.com/signup"
+    }
+  },
+  "footer": {
+    "socials": {
+      "twitter": "https://twitter.com/brightdata",
+      "linkedin": "https://www.linkedin.com/company/bright-data",
+      "github": "https://github.com/luminati-io"
+    }
+  }
+}

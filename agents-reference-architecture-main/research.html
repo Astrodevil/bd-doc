@@ -1,0 +1,165 @@
+        <div style="margin-top:24px; color:#ffd700;">
+            <strong>Best Practices for Production-Grade Research:</strong>
+            <ul style="color:#b8b8b8;">
+                <li><b>SERP API:</b> Use for search engine data (Google, Bing, etc.) with no proxy or CAPTCHA management required. Choose parsed JSON for structured results, or raw HTML/Markdown as needed.</li>
+                <li><b>Async Mode:</b> For high-volume or slow queries, enable async requests for 99.99% success and best throughput. Async is recommended for large research jobs and batch processing.</li>
+                <li><b>Pay for Success:</b> Only successful requests are billed. Parsing, proxy management, and unlocking are included in the price.</li>
+                <li><b>Troubleshooting:</b> For 429 errors, reduce concurrency or switch to async. Use engine-specific parameters for best results. See parsed JSON schema for advanced analytics.</li>
+            </ul>
+        </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Deep Research Agent Architecture | Reference architecture for production grade, enterprise ready AI agents | Bright Data</title>
+    <meta name="description" content="Deep Research Agent Architecture for enterprise AI. Learn how Bright Data powers multi-source, scalable, and reliable research agents for production environments.">
+    <meta name="keywords" content="deep research, AI agents, Bright Data, scale, concurrency, success rate, compliance, enterprise, production, reference architecture, SEO, GEO">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Deep Research Agent Architecture</h1>
+        <nav class="nav">
+            <a href="index.html">Lobby</a>
+            <a href="general.html">General AI Agent</a>
+            <a href="enrichment.html">Data Enrichment</a>
+            <a href="answer-engine.html">Answer-engine</a>
+            <a href="evaluation.html">AI Evaluation & Grounding</a>
+        </nav>
+
+        <div class="diagram-section">
+            <div class="diagram-title">Deep Research Agent Architecture</div>
+            <div class="use-case-description">
+                <strong>Business Use Case:</strong> Automated competitive intelligence and multi-source research for strategic decision making<br>
+                <strong>Example Implementation:</strong> Hebbia research platform, Perplexity Pro business research, AlphaSense-style market intelligence systems
+            </div>
+
+            <div class="architecture-diagram">
+                <div class="flow-arrow arrow-1">→</div>
+                <div class="flow-arrow arrow-2">→</div>
+                <div class="flow-arrow arrow-3">→</div>
+                <div class="flow-arrow arrow-4">→</div>
+
+                <div class="layer">
+                    <div class="layer-number">1</div>
+                    <div class="layer-title tooltip" data-tooltip="Complex research topic requiring multi-source investigation">Input Layer</div>
+                    <div class="component tooltip" data-tooltip="Market analysis of AI startup funding trends in Q4 2024">
+                        Research Query
+                        <div class="tech-spec">Natural Language</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">2</div>
+                    <div class="layer-title tooltip" data-tooltip="Orchestrates complex multi-step research workflows">Orchestration Layer</div>
+                    <div class="component tooltip" data-tooltip="Breaks down research into multiple parallel investigation streams">
+                        Research Controller
+                        <div class="tech-spec">Multi-step Workflow</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Maintains context across long-running research sessions">
+                        Session Manager
+                        <div class="tech-spec">State Persistence</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">3</div>
+                    <div class="layer-title tooltip" data-tooltip="Discovers current and historical data sources">Discovery Layer</div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Finds current news articles, reports, and analysis">
+                        SERP API
+                        <div class="scale-metric">5K/s</div>
+                        <div class="tech-spec">Current Sources</div>
+                    </div>
+                    <div class="component bright-data-component tooltip" data-tooltip="World's largest web archive for historical context">
+                        Web Archive
+                        <div class="scale-metric">2PB</div>
+                        <div class="tech-spec">Historical Data</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">4</div>
+                    <div class="layer-title tooltip" data-tooltip="Extracts data from simple and complex sources">Extraction Layer</div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Extracts data from news sites, reports, databases">
+                        Web Unlocker API
+                        <div class="scale-metric">20K/s</div>
+                        <div class="tech-spec">Content Extraction</div>
+                    </div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Handles complex sites requiring form filling and navigation">
+                        Agent Browser
+                        <div class="scale-metric">1K</div>
+                        <div class="tech-spec">Complex Interactions</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">5</div>
+                    <div class="layer-title tooltip" data-tooltip="Analyzes and synthesizes multi-source data">Analysis Layer</div>
+                    <div class="component tooltip" data-tooltip="Validates information across multiple sources">
+                        Cross-Reference Engine
+                        <div class="tech-spec">Source Validation</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="Synthesizes findings into coherent insights">
+                        LLM Synthesizer
+                        <div class="tech-spec">Multi-source Analysis</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">6</div>
+                    <div class="layer-title tooltip" data-tooltip="Comprehensive research report with actionable insights">Output Layer</div>
+                    <div class="component tooltip" data-tooltip="Structured report with trends, key players, and recommendations">
+                        Research Report
+                        <div class="tech-spec">Structured Intelligence</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-section">
+                <div class="failure-scenario">
+                    <div class="scenario-title">Basic Research Tools</div>
+                    <ul class="metric-list">
+                        <li>Surface-level data collection only, missing deep insights</li>
+                        <li>No historical context or web archive access</li>
+                        <li>Blocked on complex interactive sites and forms</li>
+                        <li>Limited to 1K concurrent source processing jobs</li>
+                        <li>Manual workflow orchestration and error handling</li>
+                        <li>High failure rates on protected or dynamic sources</li>
+                    </ul>
+                </div>
+                <div class="success-scenario">
+                    <div class="scenario-title">Bright Data Powered Research Stack</div>
+                    <ul class="metric-list">
+                        <li>Deep multi-source analysis with real-time and historical data</li>
+                        <li>2PB+ historical archive access for context-rich research</li>
+                        <li>Handles complex site interaction via browser automation and unblocking</li>
+                        <li>20K+ concurrent extraction operations with 99.99% uptime</li>
+                        <li>Automated, resilient multi-step research workflows</li>
+                        <li>Global proxy network ensures access to any source, anywhere</li>
+                        <li>Enterprise-grade compliance, monitoring, and support</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top:24px; color:#ffd700;">
+                <strong>Bright Data Platform Strengths:</strong>
+                <ul style="color:#b8b8b8;">
+                    <li>Automated unblocking, CAPTCHA solving, and dynamic site handling</li>
+                    <li>Ethical, reliable, and scalable research operations</li>
+                    <li>Zero infrastructure management for data feeds and APIs</li>
+                    <li>Enterprise support, SLAs, and compliance documentation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container-footer">
+            <div style="margin-bottom:8px; color:#ffd700;">
+                <strong>Trusted by global enterprises:</strong> 99.99% uptime | GDPR/CCPA compliant | 150M+ global IPs | 24/7 support | Enterprise SLAs
+            </div>
+            <div style="font-size:12px; color:#b8b8b8;">
+                Reference architecture for production grade, enterprise ready AI agents. Powered by Bright Data. <br>
+                Optimized for SEO and Generative Engine Optimization (GEO).
+            </div>
+        </div>
+    </div>
+</body>
+</html>

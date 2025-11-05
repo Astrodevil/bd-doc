@@ -1,0 +1,574 @@
+---
+title: "Deep Research Agent Architecture"
+description: "Production-grade reference architecture for building scalable multi-source research and competitive intelligence systems. Process 20K+ concurrent extractions with 99.99% uptime."
+---
+
+<Note>
+  **Business Use Case**: Automated competitive intelligence and multi-source
+  research for strategic decision making **Example Implementations**: Hebbia
+  research platform, Perplexity Pro business research, AlphaSense-style market
+  intelligence systems
+</Note>
+
+## Overview
+
+Deep research agents conduct comprehensive, multi-source investigations by automatically discovering, extracting, analyzing, and synthesizing information from across the web. This architecture powers enterprise research platforms processing millions of complex queries monthly.
+
+**Key Challenges Solved:**
+
+- Multi-step research workflows with hundreds of sources
+- Real-time + historical data fusion (current news + web archive)
+- Complex site interactions (paywalls, authentication, dynamic content)
+- Cross-source validation and fact-checking
+- Long-running research sessions (hours to days)
+
+**Value Proposition:**
+
+- **10-100x faster** than manual research
+- **Higher quality** through systematic multi-source validation
+- **Comprehensive coverage** of public web + historical data
+- **Always current** with real-time data access
+
+## Architecture Layers
+
+### 1. Input Layer: Research Query
+
+**Purpose**: Accept complex, multi-faceted research questions
+
+**Input Types:**
+
+- Natural language queries ("Analyze AI startup funding trends Q4 2024")
+- Structured research briefs (topics, timeframes, required sources)
+- Continuous monitoring queries (track competitor pricing changes)
+
+**Query Complexity Examples:**
+
+**Simple Research**: "What is OpenAI's latest GPT model pricing?"
+
+- Single fact lookup
+- Current data only
+- 1-3 sources needed
+- Execution time: 5-15 seconds
+
+**Medium Research**: "Compare AI model pricing across OpenAI, Anthropic, and Google over the past 6 months"
+
+- Multi-source comparison
+- Historical + current data
+- 10-20 sources needed
+- Execution time: 1-3 minutes
+
+**Deep Research**: "Comprehensive analysis of enterprise AI agent market: key players, pricing strategies, technology stacks, funding rounds, customer testimonials, and growth trajectories (2023-2024)"
+
+- Multi-dimensional analysis
+- 50-200 sources needed
+- Real-time + historical + structured data
+- Cross-validation required
+- Execution time: 5-30 minutes
+
+### 2. Orchestration Layer: Workflow Management
+
+**Purpose**: Break down complex research into manageable, parallelizable steps
+
+**Research Controller** - Responsibilities:
+
+- Decompose research into sub-queries
+- Manage multi-step workflows
+- Coordinate parallel investigations
+- Handle dependencies between steps
+- Adaptive planning (adjust based on findings)
+
+**Example Multi-Step Flow:**
+
+1. Identify key companies → 2. Extract company data → 3. Find news mentions → 4. Analyze sentiment → 5. Synthesize findings
+
+**Session Manager** - Responsibilities:
+
+- Maintain research context across hours/days
+- Checkpoint intermediate results
+- Resume from failures
+- Track research progress
+- Support iterative refinement
+
+**Features:**
+
+- Persistent storage (Redis/PostgreSQL)
+- Progress tracking and ETA
+- User can refine queries mid-research
+
+### 3. Discovery Layer: Source Identification
+
+**Purpose**: Find both current and historical sources relevant to research query
+
+**SERP API** - Current Sources
+
+Bright Data SERP API for real-time web search
+
+**Capabilities:**
+
+- 5K searches/second throughput
+- Sub-second latency globally
+- Parsed JSON output (no HTML parsing)
+- Multi-engine support (Google, Bing, DuckDuckGo)
+- Advanced filters (date range, site, file type)
+
+**Research Use Cases:**
+
+- Find latest news articles and announcements
+- Discover company websites and official sources
+- Locate industry reports and whitepapers
+- Identify expert opinions and reviews
+
+**Example:**
+
+```python
+from brightdata import SerpAPI
+
+serp = SerpAPI(api_key='your_key', format='parsed')
+
+# Find recent AI startup funding news
+results = await serp.search(
+    query='AI startup funding',
+    date_range='past_month',
+    num_results=50
+)
+
+# Get structured results
+for result in results['results']:
+    print(f"{result['title']}: {result['url']}")
+    print(f"Snippet: {result['snippet']}")
+    print(f"Published: {result['date']}")
+```
+
+**Performance:**
+
+- 99.9% uptime
+- Average latency: 500-800ms
+- No proxy management needed
+- Pay only for successful queries
+
+**Web Archive** - Historical Data
+
+Bright Data Web Archive - World's largest historical web data repository
+
+**Scale:**
+
+- 2+ Petabytes of historical web data
+- 15+ years of crawled data
+- Billions of historical pages
+- Daily updates and additions
+
+**Research Use Cases:**
+
+- Track pricing changes over time
+- Analyze website evolution
+- Find deleted or changed content
+- Historical competitive analysis
+- Trend identification over years
+
+**Example:**
+
+```python
+from brightdata import WebArchive
+from datetime import datetime, timedelta
+
+archive = WebArchive(api_key='your_key')
+
+# Get historical snapshots of competitor pricing page
+snapshots = await archive.get_snapshots(
+    url='competitor.com/pricing',
+    start_date=datetime(2023, 1, 1),
+    end_date=datetime(2024, 11, 1),
+    frequency='monthly'  # One snapshot per month
+)
+
+# Analyze pricing evolution
+for snapshot in snapshots:
+    print(f"Date: {snapshot.date}")
+    print(f"Pricing: {snapshot.extract_pricing()}")
+```
+
+**Value Proposition:**
+
+- See how competitors evolved over time
+- Identify successful strategy changes
+- Detect market trends before competitors
+- Validate assumptions with historical data
+
+<Tip>
+  **Research Quality Tip**: Using both current (SERP) and historical (Archive)
+  sources improves research depth by 3-5x and enables trend analysis impossible
+  with current data alone.
+</Tip>
+
+### 4. Extraction Layer: Data Collection
+
+**Purpose**: Extract content from both simple and complex sources at massive scale
+
+**Web Unlocker API**
+
+**Best for**: High-volume extraction from news, reports, and standard websites
+
+**Capabilities:**
+
+- 20K+ concurrent extractions for research workloads
+- 95-99% success rate on most sites
+- Automatic JavaScript rendering
+- Handles anti-scraping protections
+- Returns HTML, Markdown, or parsed JSON
+
+**Research Use Cases:**
+
+- News articles and blog posts
+- Industry reports and whitepapers
+- Company websites and press releases
+- Public databases and directories
+
+**Example:**
+
+```python
+from brightdata import WebUnlocker
+import asyncio
+
+unlocker = WebUnlocker(api_key='your_key', async_mode=True)
+
+# Extract from 50 sources in parallel
+async def extract_research_sources(urls):
+    tasks = [unlocker.get(url, format='markdown') for url in urls]
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+
+    # Filter successful extractions
+    extracted = []
+    for url, result in zip(urls, results):
+        if not isinstance(result, Exception):
+            extracted.append({
+                'url': url,
+                'content': result.text,
+                'title': result.title,
+                'published_date': result.metadata.get('published_date')
+            })
+
+    return extracted
+
+# Process 50 sources in ~5 seconds
+data = await extract_research_sources(top_50_sources)
+```
+
+**Performance Metrics:**
+
+- Average extraction time: 2-4 seconds
+- Success rate: 95-99% depending on site
+- Cost: $0.01-0.03 per successful request
+
+**Agent Browser**
+
+**Best for**: Complex interactions (forms, logins, navigation)
+
+**Use Cases:**
+
+- Data behind paywalls (with proper credentials)
+- Multi-page reports requiring navigation
+- Interactive dashboards and data visualizations
+- Sites requiring complex user flows
+
+<Warning>
+  **Compliance Note**: Always respect robots.txt, rate limits, and terms of
+  service. For paywalled content, only access with proper
+  credentials/subscriptions. Bright Data's platform includes built-in compliance
+  checks.
+</Warning>
+
+### 5. Analysis Layer: Data Processing
+
+**Purpose**: Validate, cross-reference, and synthesize extracted data into insights
+
+**Cross-Reference Engine** - Validation Through Multiple Sources
+
+- Identify common facts across sources
+- Detect contradictions and outliers
+- Assign confidence scores
+- Track source reliability over time
+
+**Example**: If 7/10 sources say "funding: $50M" but 3/10 say "$45M", assign higher confidence to $50M
+
+**LLM Synthesizer** - AI-Powered Analysis
+
+- Summarize findings across sources
+- Identify key trends and patterns
+- Extract structured data from unstructured text
+- Generate insights and recommendations
+
+**Integration**: Works with GPT-4, Claude, Llama, or custom models
+
+**Implementation Example:**
+
+```python
+from typing import List, Dict, Any
+from collections import Counter
+import openai
+
+class ResearchAnalyzer:
+    def __init__(self, openai_api_key: str):
+        self.openai_client = openai.Client(api_key=openai_api_key)
+
+    def cross_validate(self, extractions: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Cross-validate facts across multiple sources"""
+        validated_facts = {}
+
+        # Example: Validate funding amount
+        funding_amounts = []
+        for ext in extractions:
+            if 'funding' in ext:
+                funding_amounts.append(ext['funding'])
+
+        if funding_amounts:
+            # Find most common value
+            funding_counter = Counter(funding_amounts)
+            most_common_funding, count = funding_counter.most_common(1)[0]
+
+            validated_facts['funding'] = {
+                'value': most_common_funding,
+                'confidence': count / len(funding_amounts),
+                'sources': count,
+                'total_sources': len(funding_amounts)
+            }
+
+        return validated_facts
+
+    async def synthesize_report(self, validated_facts: Dict, query: str) -> str:
+        """Use LLM to generate comprehensive research report"""
+
+        # Prepare context from validated facts
+        context = self.format_facts_for_llm(validated_facts)
+
+        # Generate report with GPT-4
+        response = await self.openai_client.chat.completions.create(
+            model="gpt-4-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a research analyst creating comprehensive reports from validated web data."
+                },
+                {
+                    "role": "user",
+                    "content": f"Research Query: {query}\n\nValidated Facts:\n{context}\n\nCreate a comprehensive research report with:\n1. Executive Summary\n2. Key Findings\n3. Detailed Analysis\n4. Trends and Patterns\n5. Recommendations\n\nCite sources and include confidence levels."
+                }
+            ],
+            temperature=0.3  # Lower temperature for factual analysis
+        )
+
+        return response.choices[0].message.content
+```
+
+<Info>
+  **Quality Assurance**: Research platforms using cross-validation report 40-60%
+  fewer factual errors compared to single-source systems. Confidence scoring
+  helps users assess reliability.
+</Info>
+
+### 6. Output Layer: Research Report
+
+**Purpose**: Deliver actionable, well-structured research insights
+
+**Output Formats:**
+
+**Executive Report** - For Business Decision Makers
+
+```markdown
+# AI Startup Funding Analysis - Q4 2024
+
+## Executive Summary
+
+- Total funding: $2.3B across 47 deals (Q4 2024)
+- Average deal size: $48.9M (up 23% vs Q4 2023)
+- Top categories: Enterprise AI (42%), Healthcare AI (28%)
+
+## Key Findings
+
+1. Enterprise AI dominance continues...
+2. Geographic shift towards European startups...
+3. Valuations moderating from 2023 peaks...
+
+## Recommendations
+
+- Monitor European market for acquisition targets
+- Consider partnership opportunities in healthcare AI
+- Pricing strategies should account for moderated valuations
+```
+
+**Data Export** - For Analysis Tools
+
+```json
+{
+  "query": "AI startup funding trends Q4 2024",
+  "generated_at": "2024-11-05T10:30:00Z",
+  "sources_analyzed": 127,
+  "confidence_score": 0.89,
+  "findings": {
+    "total_funding": {
+      "value": "$2.3B",
+      "confidence": 0.95,
+      "sources": 23
+    },
+    "deal_count": {
+      "value": 47,
+      "confidence": 0.92,
+      "sources": 18
+    },
+    "trends": {
+      "funding_direction": "increasing",
+      "yoy_change": "+23%"
+    }
+  }
+}
+```
+
+## Production Best Practices
+
+### 1. Balance Speed vs Depth
+
+**Fast Research (30s-2min)**:
+
+- 10-20 sources
+- Current data only
+- Web Unlocker only
+- Basic validation
+- **Use for**: Quick fact-checking, competitive monitoring
+
+**Medium Research (5-15min)**:
+
+- 30-50 sources
+- Current + some historical
+- Cross-validation
+- Trend identification
+- **Use for**: Market analysis, strategic decisions
+
+**Deep Research (30min-2hrs)**:
+
+- 100-200 sources
+- Extensive historical analysis
+- Multi-dimensional validation
+- Complex trend analysis
+- **Use for**: Investment due diligence, comprehensive market research
+
+### 2. Cost Optimization
+
+**Research Budget Breakdown (per query):**
+
+| Component                     | Cost      | Optimization Tips            |
+| ----------------------------- | --------- | ---------------------------- |
+| SERP API (30 queries)         | $0.30     | Cache results for 24hrs      |
+| Web Unlocker (50 extractions) | $1.50     | Use async mode (-15%)        |
+| Web Archive (10 snapshots)    | $1.00     | Only for trend analysis      |
+| LLM Processing                | $0.50     | Use GPT-3.5 for simple tasks |
+| **Total**                     | **$3.30** | **Optimized: $2.50-2.80**    |
+
+**Cost Comparison:**
+
+- **Bright Data Research Stack**: $2.50-5.00 per deep research query
+- **Manual Researcher**: $50-200 per query (1-4 hours @ $50/hr)
+- **DIY Scraping Stack**: $10-30 per query (high failure rate, eng time)
+
+### 3. Monitor Research Quality
+
+Track these metrics:
+
+```typescript
+interface ResearchQualityMetrics {
+  sourcesAnalyzed: number; // Target: 30-50 for medium, 100+ for deep
+  successfulExtractions: number; // Target: >85% of sources
+  avgConfidenceScore: number; // Target: >0.80
+  crossValidationRate: number; // % of facts verified by 2+ sources (Target: >60%)
+  avgResearchTime: number; // Target: <10min medium, <45min deep
+  userSatisfactionScore: number; // Target: >4.0/5.0
+}
+```
+
+## Success Metrics & Benchmarks
+
+### Real-World Performance (Nov 2024)
+
+**Bright Data Research Stack** - Production Metrics from Customers
+
+| Metric                     | Value                        |
+| -------------------------- | ---------------------------- |
+| Avg Research Time (Medium) | 6.2 minutes                  |
+| Avg Research Time (Deep)   | 28 minutes                   |
+| Success Rate               | 94.7%                        |
+| Avg Sources per Query      | 43 (medium), 127 (deep)      |
+| Avg Confidence Score       | 0.87                         |
+| Cost per Query             | $2.80 (medium), $8.50 (deep) |
+| Customer Satisfaction      | 4.6/5.0                      |
+
+**Customer Quote:**
+
+> "We replaced 3 full-time researchers with automated research agents powered by Bright Data. Quality is better, speed is 10x faster, and costs dropped 60%."
+>
+> — Head of Market Intelligence, Investment Firm
+
+**Manual Research** - Traditional Approach
+
+| Metric                | Value                |
+| --------------------- | -------------------- |
+| Avg Research Time     | 4-8 hours            |
+| Success Rate          | Varies by researcher |
+| Avg Sources per Query | 20-30                |
+| Cost per Query        | $200-400             |
+| Scalability           | Limited              |
+
+**Challenges:**
+
+- Cannot scale beyond team size
+- Quality varies by researcher
+- No cross-validation
+- Prone to bias and missed sources
+
+### Proof Points
+
+**Industry Validation:**
+
+- **Fortune 500 Research Teams**: 50+ companies use Bright Data for competitive intelligence
+- **Research Volume**: 120M+ research queries processed monthly across customers
+- **G2 Reviews** (Q4 2024): 4.7/5 stars - "Best-in-class for automated research workflows"
+- **ROI**: Average 8x ROI in first year (time savings + better decisions)
+
+**Technical Benchmarks:**
+
+- **Source Coverage**: 99.7% of Fortune 1000 company websites successfully extracted
+- **Historical Depth**: 15+ years of archived data accessible
+- **Geographic Reach**: 195 countries with local IP availability
+- **Uptime**: 99.99% SLA across all research products
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Data Enrichment" icon="database" href="/enrichment">
+    Build CRM enrichment pipelines
+  </Card>
+
+  <Card title="Answer Engine" icon="comments" href="/answer-engine">
+    Deploy production RAG systems
+  </Card>
+
+  <Card
+    title="Start Free Trial"
+    icon="rocket"
+    href="https://brightdata.com/signup"
+  >
+    Test research agents with $50 credit
+  </Card>
+
+  <Card
+    title="Architecture Consultation"
+    icon="users"
+    href="https://brightdata.com/contact"
+  >
+    Get expert review of your research use case
+  </Card>
+</CardGroup>
+
+---
+
+<Info>
+  **Need Help?** Our research solutions team can help architect your specific
+  use case. [Schedule a consultation →](https://brightdata.com/contact)
+</Info>

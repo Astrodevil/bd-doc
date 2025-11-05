@@ -1,0 +1,158 @@
+        <div style="margin-top:24px; color:#ffd700;">
+            <strong>Best Practices for Real-Time AI Agents:</strong>
+            <ul style="color:#b8b8b8;">
+                <li><b>Browser API:</b> For real-time agents needing dynamic web interaction, use Browser API for robust automation and unblocking at scale.</li>
+                <li><b>Web Unlocker:</b> Use for fast, non-interactive data extraction with automatic proxy and CAPTCHA handling.</li>
+                <li><b>Async Mode:</b> For high concurrency, enable async requests to maximize reliability and avoid rate limits.</li>
+                <li><b>Troubleshooting:</b> For failures on protected sites, switch to Browser API or enable async mode.</li>
+            </ul>
+        </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>General AI Agent Architecture | Reference architecture for production grade, enterprise ready AI agents | Bright Data</title>
+    <meta name="description" content="General AI Agent Architecture for real-time, production-grade assistants. See how Bright Data ensures reliability, scale, and compliance for enterprise AI agents.">
+    <meta name="keywords" content="general AI agent, Bright Data, scale, concurrency, success rate, compliance, enterprise, production, reference architecture, SEO, GEO">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>General AI Agent Architecture</h1>
+        <nav class="nav">
+            <a href="index.html">Lobby</a>
+            <a href="enrichment.html">Data Enrichment</a>
+            <a href="research.html">Deep Research</a>
+            <a href="answer-engine.html">Answer-engine</a>
+            <a href="evaluation.html">AI Evaluation & Grounding</a>
+        </nav>
+
+        <div class="diagram-section">
+            <div class="diagram-title">General AI Agent Architecture</div>
+            <div class="use-case-description">
+                <strong>Business Use Case:</strong> AI  assistants that provide real-time  information<br>
+                <strong>Example Implementation:</strong> Flight status: Travel booking platforms, airline chatbots, corporate travel management systems accessing live flight data
+            </div>
+            <!-- architecture diagram copied from original -->
+            <div class="architecture-diagram">
+                <div class="flow-arrow arrow-1">→</div>
+                <div class="flow-arrow arrow-2">→</div>
+                <div class="flow-arrow arrow-3">→</div>
+                <div class="flow-arrow arrow-4">→</div>
+
+                <div class="layer">
+                    <div class="layer-number">1</div>
+                    <div class="layer-title tooltip" data-tooltip="Initial user request entry point">Input Layer</div>
+                    <div class="component tooltip" data-tooltip="User asks about flight AA1234 status">
+                        Flight Status Query
+                        <div class="tech-spec">REST API / Chat Interface</div>
+                    </div>
+                </div>
+
+                <div class="layer layer-wide">
+                    <div class="layer-number">2</div>
+                    <div class="layer-title tooltip" data-tooltip="AI orchestrates the workflow and determines data collection strategy">AI Orchestration</div>
+                    <div class="component tooltip" data-tooltip="AI parses intent, extracts flight details, and plans data collection">
+                        AI Agent / LLM
+                        <div class="tech-spec">Intent Understanding</div>
+                    </div>
+                    <div class="internal-arrow">↓ ↓ ↓</div>
+                    <div class="source-cards">
+                        <div class="component tooltip" data-tooltip="Airline official website for real-time status">
+                            Airline Site
+                            <div class="tech-spec">Primary Source</div>
+                        </div>
+                        <div class="component tooltip" data-tooltip="FlightAware, FlightRadar24 for tracking data">
+                            Flight Tracker
+                            <div class="tech-spec">Secondary Source</div>
+                        </div>
+                        <div class="component tooltip" data-tooltip="Airport websites for gate and terminal info">
+                            Airport Data
+                            <div class="tech-spec">Tertiary Source</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">3</div>
+                    <div class="layer-title tooltip" data-tooltip="Web data extraction layer - the critical bottleneck">Data Access Layer</div>
+                    <div class="component bright-data-component tooltip" data-tooltip="Bypasses airline CAPTCHAs and rate limits automatically">
+                        Web Unlocker API
+                        <div class="scale-metric">1K/s</div>
+                        <div class="tech-spec">99.3% CAPTCHA solve</div>
+                    </div>
+                    <div class="component failure-component tooltip" data-tooltip="Gets blocked by airline security, fails on CAPTCHAs">
+                        Standard Scraping
+                        <div class="tech-spec">60% failure rate</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">4</div>
+                    <div class="layer-title tooltip" data-tooltip="AI analyzes and synthesizes the collected data">AI Analysis</div>
+                    <div class="component tooltip" data-tooltip="AI interprets raw data, identifies patterns, and extracts insights">
+                        Data Synthesis
+                        <div class="tech-spec">LLM Processing</div>
+                    </div>
+                    <div class="component tooltip" data-tooltip="AI generates natural language response with flight status details">
+                        Response Generation
+                        <div class="tech-spec">Structured Output</div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-number">5</div>
+                    <div class="layer-title tooltip" data-tooltip="Final response delivered to user">Output Layer</div>
+                    <div class="component tooltip" data-tooltip="Flight AA1234: On-time, Gate B12, Departure 3:45 PM">
+                        Flight Status Response
+                        <div class="tech-spec">API / Chat Response</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-section">
+                <div class="failure-scenario">
+                    <div class="scenario-title">Competitor Infrastructure</div>
+                    <ul class="metric-list">
+                        <li>60% failure rate on airline websites due to anti-bot and rate limits</li>
+                        <li>CAPTCHA challenges stop agents completely</li>
+                        <li>Rate limiting prevents real-time updates and scaling</li>
+                        <li>Frequent timeouts during peak travel or high concurrency</li>
+                        <li>No SLA or compliance for business-critical applications</li>
+                    </ul>
+                </div>
+                <div class="success-scenario">
+                    <div class="scenario-title">Bright Data Infrastructure</div>
+                    <ul class="metric-list">
+                        <li>99.3%+ success rate with automated CAPTCHA solving and unblocking</li>
+                        <li>Real-time flight data access at global scale</li>
+                        <li>1000+ concurrent flight queries supported with 99.99% uptime</li>
+                        <li>Sub-second response times, even at peak load</li>
+                        <li>Enterprise SLA, compliance, and support for mission-critical travel apps</li>
+                        <li>Global proxy network and automated infrastructure management</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top:24px; color:#ffd700;">
+                <strong>Bright Data Platform Strengths:</strong>
+                <ul style="color:#b8b8b8;">
+                    <li>Ethical, reliable, and scalable data operations for real-time AI agents</li>
+                    <li>Automated unblocking, proxy rotation, and compliance</li>
+                    <li>Zero infrastructure management for APIs and data feeds</li>
+                    <li>Enterprise support, SLAs, and compliance documentation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container-footer">
+            <div style="margin-bottom:8px; color:#ffd700;">
+                <strong>Trusted by global enterprises:</strong> 99.99% uptime | GDPR/CCPA compliant | 150M+ global IPs | 24/7 support | Enterprise SLAs
+            </div>
+            <div style="font-size:12px; color:#b8b8b8;">
+                Reference architecture for production grade, enterprise ready AI agents. Powered by Bright Data. <br>
+                Optimized for SEO and Generative Engine Optimization (GEO).
+            </div>
+        </div>
+    </div>
+</body>
+</html>
