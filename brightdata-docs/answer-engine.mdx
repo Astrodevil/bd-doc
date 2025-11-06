@@ -1,38 +1,35 @@
 ---
 title: "Answer Engine Architecture"
-description: "Enterprise-class answer synthesis: generation, validation, and serving for customer, internal, or agent-facing queries."
+description: "Architecture and best practices for high-concurrency, production-grade knowledge or answer generation agent workflows."
 ---
 
 <Frame>![Diagram](./answer-engine-diagram.png)</Frame>
 
-Modern enterprises need reliable AI systems that can generate, verify, and deliver accurate answers instantly — whether serving customer queries, powering internal knowledge bases, or enhancing RAG pipelines for AI agents.
+Modern enterprises need reliable AI systems that can generate, verify, and deliver accurate answers instantly, whether serving customer queries, powering internal knowledge bases, or enhancing RAG pipelines for AI agents.
 
 ## Overview
 
 The **AI Answer Engine Architecture** delivers fast, factual, and cited answers for real-time query resolution.  
-It connects tightly with enrichment and research layers to ensure every answer is verified, current, and auditable.
 
+- Connects tightly with enrichment and research layers to ensure every answer is verified, current, and auditable.
 - Synthesizes natural-language answers with supporting evidence  
 - Runs automatic validation using secondary retrieval  
 - Supports low-latency, high-concurrency query serving at scale  
 
-## Core Architecture
+## How it works
 
-1. **Query Input Layer**  
-   Accepts structured or natural language queries via API, chat, or embedded widget.
+1. **Input Layer:** Accepts queries from API, chat, or system triggers.
 
-2. **Retrieval & Context Assembly**  
-   Pulls relevant data from enrichment, research, or vector stores for context retrieval.
+2. **Orchestration Layer:** Manages async tasks and maintains session context.  
 
-3. **Reasoning Engine**  
-   Uses hybrid LLM chaining and RAG pipelines to generate concise, evidence-backed answers.
+3. **Discovery Layer:** Performs real-time web search and ranks relevant results. 
 
-4. **Validation & Guardrails**  
-   Performs independent fact-checking using secondary retrieval and assigns confidence scores.  
-   Outputs always include source citations.
+4. **Extraction Layer:** Extracts structured and unstructured data from sources. 
 
-5. **Serving Layer**  
-   Delivers answers via low-latency streaming API, webhooks, or embeddable components with full session/context awareness.
+5. **Synthesis Layer:** Combines and validates data using LLM-based synthesis.  
+
+6. **Output Layer:** Delivers final responses via API or user interface.  
+
 
 ## Standard vs Bright Data Stack
 
@@ -62,18 +59,16 @@ It connects tightly with enrichment and research layers to ensure every answer i
     50K+ concurrent requests with 99.99% uptime  
 
     Automated unblocking, proxy rotation, and CAPTCHA solving  
-
+se **Browser API** for dynamic site interactions (navigation, form filling, clicking) with unlimited concurrent sessions and robust unblocking; integrates with Puppeteer, Playwright, and Selenium.  
+Use **Web Unlocker** for high-scale, non-interactive data extraction where browser automation isn’t needed; only successful requests are billed.  
+Use **SERP API** in async mode for large-scale search engine queries with structured parsed JSON results for reliability and consistency.  
+Enable **Async Mode** for high-throughput answer generation to maximize concurrency and minimize rate-limit issues.  
+**Troubleshoot** by reducing concurrency or enabling async for 429 or timeout errors; switch to Browser API for complex or dynamic sites.
     SOC 2 Type 2 compliant with full audit logging
   </Card>
 
 </CardGroup>
-
-## Bright Data Platform Strengths
-
-- Automated unblocking, proxy rotation, and source monitoring  
-- Reliable, ethical, and scalable answer generation infrastructure  
-- Zero infrastructure management for APIs or data feeds  
-- Enterprise-grade SLAs, compliance, and audit readiness  
+ 
 
 ## Implementation Guidance
 
@@ -84,17 +79,17 @@ It connects tightly with enrichment and research layers to ensure every answer i
 
 ## Best Practices
 
-- **Browser API:** Use for dynamic sites requiring interaction (navigation, clicks, form submissions).  
-- **Web Unlocker:** Ideal for large-scale, non-interactive extractions. Pay only for successful requests.  
-- **SERP API:** Use for search-based answers with async mode for scale and structured results.  
-- **Async Mode:** Always enable for high-throughput, large-scale queries to avoid rate limits.  
-- **Troubleshooting:** On 429s or slow queries, lower concurrency or switch to async; for dynamic pages, switch to Browser API.  
+- Use **Browser API** for dynamic site interactions (navigation, form filling, clicking) with unlimited concurrent sessions and robust unblocking; integrates with Puppeteer, Playwright, and Selenium.  
+- Use **Web Unlocker** for high-scale, non-interactive data extraction where browser automation isn’t needed; only successful requests are billed.  
+- Use **SERP API** in async mode for large-scale search engine queries with structured parsed JSON results for reliability and consistency.  
+- Enable **Async Mode** for high-throughput answer generation to maximize concurrency and minimize rate-limit issues.  
+- **Troubleshoot** by reducing concurrency or enabling async for 429 or timeout errors; switch to Browser API for complex or dynamic sites.  
 
 ## Example: Enterprise Answer Engine
 
 A company uses this architecture for customer-facing AI support and internal RAG systems:
 
-1. User submits a product query through the chat interface.  
+1. User ask complex question using the chat interface.  
 2. The engine retrieves live documentation, cached knowledge base entries, and external references.  
 3. The LLM synthesizes an answer, verified through secondary retrieval.  
 4. Confidence score and sources are appended automatically.  
