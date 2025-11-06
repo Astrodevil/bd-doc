@@ -1,45 +1,38 @@
 ---
 title: "Data Enrichment Agent Architecture"
-description: "Enterprise data enrichment for CRM and lead records: ingestion, normalization, deduplication, embeddings, caching, and delivery. Production-ready patterns powered by Bright Data."
+description: "Architecture and best practices for sales or marketing agent workflows thet need automated data completion and lead enrichment."
 ---
 
 <Frame>![Diagram](./enrichment-agent-diagram.png)</Frame>
 
-Modern sales and operations teams need automated systems that can enrich CRM and lead data continuously — adding verified contacts, company details, and metadata from multiple sources with speed, accuracy, and compliance.
+Modern sales and operations teams need automated systems that can enrich CRM and lead data continuously, adding verified contacts, company details, and metadata from multiple sources with speed, accuracy, and compliance.
 
 ## Overview
 
-The **Data Enrichment Agent Architecture** automates data ingestion, validation, normalization, and augmentation at enterprise scale.  
-It supports both **real-time** lookups and **batch enrichment** workflows for CRM systems and lead databases.
+The **Data Enrichment Agent Architecture** powers automated, enterprise-scale enrichment for CRM and lead data with real-time and batch workflows.
 
 - Ingests and validates raw records from CRM, marketing, or internal data sources  
 - Enriches each record with verified company, contact, or firmographic data  
 - Normalizes formats for clean, deduplicated records  
 - Returns structured outputs ready for downstream analytics or AI pipelines  
 
-## Enrichment Architecture and Data Flow
+## How it works
 
 <Info>
 Example implementations: Clay.com enrichment pipelines, Apollo.io contact discovery, ZoomInfo-style lead completion platforms
 </Info>
 
-1. **Input Layer**  
-   Ingests records via API, CSV upload, or message queues. Handles structured and semi-structured formats.
+1. **Input Layer:** Ingests records via API, CSV upload, or message queues.
 
-2. **Normalization Layer**  
-   Cleans and standardizes fields like emails, domains, company names, and metadata.
+2. **Orchesration Layer:** Consist of enrichment and batch processing, also cleans and standardizes fields like emails, domains and metadata. 
 
-3. **Data Retrieval Layer**  
-   Uses Bright Data’s **Web Unlocker** and **Browser API** to fetch missing fields (e.g., company details, LinkedIn profiles, funding data).
+3. **Discovery Layer:** Uses Bright Data’s **SERP API** and search for company name, urls and also rank sources by relevence and authority.
 
-4. **Validation & Deduplication**  
-   Cross-verifies data across multiple sources; merges duplicates using deterministic and embedding-based matching.
+4. **Extraction Layer:** Uses **Web Unlocker** to extract data from websites and bypass blocking. Also extracts pre-structured datasets from websites like LinkedIn, Cruncbase, etc.
 
-5. **Embedding & Caching Layer**  
-   Stores vector representations for semantic search and reduces redundant lookups.
+5. **Processing Layer:** Validates data layer and takes care of enriched data by injecting into existing workflow.
 
-6. **Delivery Layer**  
-   Outputs enriched data back to CRM, data warehouse, or analytics systems.
+6. **Output Layer:** Outputs enriched data back to CRM, data warehouse, or analytics systems and comes with complete company profile.
 
 ## Standard vs Bright Data Stack
 
@@ -72,21 +65,14 @@ Example implementations: Clay.com enrichment pipelines, Apollo.io contact discov
 
     Trusted by Fortune 500s for mission-critical enrichment
   </Card>
-</CardGroup>
-
-## Bright Data Platform Strengths
-
-- Ethical, reliable, and scalable enrichment infrastructure  
-- Real-time monitoring and uptime visibility for all APIs  
-- Zero infrastructure management for proxies or data feeds  
-- Enterprise SLAs, compliance, and support for high-volume workflows  
+</CardGroup> 
 
 ## Best Practices
 
-- **Web Unlocker:** Use for high-scale, non-interactive enrichment. Pay only for successful requests. Handles proxies, headers, and CAPTCHAs automatically.  
-- **Async Mode:** For large batch jobs or 1K+ concurrent records, enable async mode to maximize throughput and reliability. Prevents 429 rate-limit errors.  
-- **Browser API:** Use when interaction is required (e.g., logins, scrolling, or dynamic rendering). Integrates with Puppeteer, Playwright, and Selenium.  
-- **Troubleshooting:** If direct API scraping fails, target the main webpage. For complex workflows, use Browser API to capture and replay network calls.  
+- Use **Web Unlocker** for fast, non-interactive enrichment with automatic proxy and CAPTCHA handling.
+- Enable **async mode** for high-throughput batch jobs and to avoid rate limits (scale beyond 1K+ parallel jobs).
+- Use **Browser API** for interactive sites (logins, scrolling, dynamic content) and advanced workflows.
+- Troubleshoot by switching to Browser API if API endpoints fail or get blocked.
 
 
 ## Example: CRM Lead Enrichment Agent
