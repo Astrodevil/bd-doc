@@ -1,11 +1,11 @@
 ---
 title: "Deep Research Agent Architecture"
-description: "How to design robust, multi-source research agents for competitive intelligence, hybrid retrieval, and low-latency synthesis."
+description: "Architecture and best practices for competitive intelligence and multi-source research workflow and agents."
 ---
 
 <Frame>![Diagram](./research-agent-diagram.png)</Frame>
 
-Modern enterprises need research agents that can think, retrieve, and synthesize insights across thousands of sources — from the live web to historical archives — with speed, accuracy, and compliance.
+Modern enterprises need research agents that can think, retrieve, and synthesize insights across thousands of sources from the live web to historical archives with speed, accuracy, and compliance.
 
 ## Overview
 
@@ -18,28 +18,18 @@ The **Deep Research Agent Architecture** powers enterprise-grade research assist
 
 ## How it works
 
-1. **Input Layer**  
-   Accepts research queries via API, chat, or automation triggers.
+1. **Input Layer:** Accepts research queries via API, chat, or automation triggers.
 
-2. **Retrieval Layer**  
-   Performs hybrid search across Google/Bing, APIs, vector stores, and private datasets.
+2. **Orchestration Layer:** Breakdown into multiple parallel tasks and maintain contexts around long research sessions.
 
-3. **Ranking & Filtering**  
-   Combines keyword-based and embedding-based ranking for relevance and precision.
+3. **Discovery Layer:** Finds and combine current news, articles and data from multiple sources or web archives.
 
-4. **Synthesis Layer**  
-   LLM-based reasoning merges evidence from multiple sources into structured, traceable outputs.
+4. **Extraction Layer:** To extract data from articles, pages and sources. It also handles complex operation on websites like form filling or page navigation.
 
-5. **Delivery Layer**  
-   Returns synthesized, source-linked responses through APIs, dashboards, or chat interfaces.
+5. **Analysis Layer:** Validates sources and findings from multiple sources and creates final coherent insight.
 
+5. **Output Layer:** Returns final report with accurate details and source links in a structured manner.
 
-## Hybrid Retrieval & Synthesis
-
-- **Multi-engine discovery:** Uses Google, Bing, vertical APIs, internal docs, and archived web data.
-- **Ranking:** Hybrid ranking using ML evidence scoring and embedding-based similarity.
-- **Latency:** Targets less than 3s p95 latency per query with parallelized lookups (less than 500ms source access).
-- **Proof:** Benchmarked 98% domain coverage across Fortune 1000 websites.
 
 ## Standard vs Bright Data Research Stack
 
@@ -73,8 +63,6 @@ The **Deep Research Agent Architecture** powers enterprise-grade research assist
 
     Global proxy network ensuring access to any source, anywhere
 
-    Enterprise-grade compliance, monitoring, and support
-
   </Card>
 
 </CardGroup>
@@ -82,14 +70,10 @@ The **Deep Research Agent Architecture** powers enterprise-grade research assist
 
 ## Best Practices
 
-- Use **hybrid SERP + vector search** for maximum coverage
-- **Cache high-value retrievals** with expiry to reduce load
-- Use **Chain-of-Thought LLMs** for multi-source synthesis
-- For **search engine data**, use **SERP API** for structured or raw results
-- Enable **async mode** for high-volume or slow queries (recommended for 99.99% success)
-- **Pay for Success**: Only successful retrievals are billed; parsing and proxy management included
-- On **429 errors**, reduce concurrency or switch to async mode
-- Use **engine-specific parameters** for advanced analytics or domain-specific retrieval
+- Use **SERP API** for search engine data (Google, Bing, etc.) with automatic proxy and CAPTCHA handling, choose parsed JSON or raw HTML as needed.
+- Enable **async mode** for high-throughput or slow research jobs to maximize success rates and speed.
+- Benefit from **Pay for Success** pricing, only successful requests are billed, including parsing and proxy management.
+- Troubleshoot by reducing concurrency or switching to async mode for [**429 errors**](https://brightdata.com/faqs/proxy-errors/429-error-how-to-avoid), check parsed JSON schema for advanced analytics.
 
 ## Example: Deep Research Agent
 
@@ -99,4 +83,4 @@ Used by business intelligence systems like Hebbia, Perplexity Pro, and AlphaSens
 2. Hybrid search across live web, APIs, and historical archives
 3. Automatic unblocking for protected or rate-limited domains
 4. Multi-source synthesis with citation-linked insights
-5. Enterprise-compliant delivery of summarized intelligence
+5. Enterprise-compliant delivery of summarized intelligent research report
