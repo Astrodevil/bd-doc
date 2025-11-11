@@ -1,11 +1,11 @@
 ---
 title: "Deep Research Agent Architecture"
-description: "Architecture and best practices for competitive intelligence and multi-source research workflow and agents."
+description: "Architecture and best practices for comprehensive multi-source research workflows and agents."
 ---
 
 <Frame>![Diagram](./research-agent-diagram.png)</Frame>
 
-Modern enterprises need research agents that can think, retrieve, and synthesize insights across thousands of sources from the live web to historical archives with speed, accuracy, and compliance.
+Modern AI teams and engineers need research agents that can autonomously retrieve, analyze, and synthesize information from live web data to historical archives, powering deep, domain-agnostic insights with speed, precision, and compliance.
 
 ## Overview
 
@@ -20,7 +20,7 @@ The **Deep Research Agent Architecture** powers enterprise-grade research assist
 
 1. **Input Layer:** Accepts research queries via API, chat, or automation triggers.
 
-2. **Orchestration Layer:** Breakdown into multiple parallel tasks and maintain contexts around long research sessions.
+2. **Orchestration Layer:** Breaks research into multiple parallel tasks, maintains context across long research sessions and coordinates multi-agent workflows using AI agent frameworks like [**CrewAI**](https://docs.brightdata.com/integrations/crew-ai), [**Agno**](https://docs.brightdata.com/integrations/agno), [**LangChain**](https://docs.brightdata.com/integrations/langchain), [**Vercel Ai SDK**](https://docs.brightdata.com/integrations/vercel-ai-sdk) and [more](https://docs.brightdata.com/ai-integrations).
 
 3. **Discovery Layer:** Finds and combine current news, articles and data from multiple sources or web archives.
 
@@ -28,8 +28,7 @@ The **Deep Research Agent Architecture** powers enterprise-grade research assist
 
 5. **Analysis Layer:** Validates sources and findings from multiple sources and creates final coherent insight.
 
-5. **Output Layer:** Returns final report with accurate details and source links in a structured manner.
-
+6. **Output Layer:** Returns final report with accurate details and source links in a structured manner.
 
 ## Standard vs Bright Data Research Stack
 
@@ -67,17 +66,16 @@ The **Deep Research Agent Architecture** powers enterprise-grade research assist
 
 </CardGroup>
 
-
 ## Best Practices
 
-- Use **SERP API** for search engine data (Google, Bing, etc.) with automatic proxy and CAPTCHA handling, choose parsed JSON or raw HTML as needed.
+- Use [**SERP API**](https://brightdata.com/products/serp-api) for search engine data (Google, Bing, etc.) with automatic proxy and CAPTCHA handling, choose parsed JSON or raw HTML as needed.
 - Enable **async mode** for high-throughput or slow research jobs to maximize success rates and speed.
 - Benefit from **Pay for Success** pricing, only successful requests are billed, including parsing and proxy management.
 - Troubleshoot by reducing concurrency or switching to async mode for [**429 errors**](https://brightdata.com/faqs/proxy-errors/429-error-how-to-avoid), check parsed JSON schema for advanced analytics.
 
 ## Example: Deep Research Agent
 
-Used by business intelligence systems like Hebbia, Perplexity Pro, and AlphaSense-style research tools, this agent pattern enables:
+Used across various domains including business intelligence, academic research, market analysis, trend forecasting, and competitive landscape monitoring, this agent pattern enables:
 
 1. Query understanding and topic breakdown via LLM planning
 2. Hybrid search across live web, APIs, and historical archives

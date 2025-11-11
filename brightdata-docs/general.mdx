@@ -9,73 +9,74 @@ Modern platforms need AI agents that can think, act, and respond in real time, f
 
 The **General AI Agent Architecture** powers real-time assistants and workflow agents that can:
 
-- Answer live data queries (flight status, price checks, logistics updates)
-- Orchestrate multiple APIs, sites, and workflows safely
+- Answer live data queries (price checks, logistics updates, service availability)
+- Orchestrate multiple APIs, websites, and workflows safely and reliably
 - Operate under high concurrency with enterprise-level uptime (99.99%)
-- 99.3%+ success rate with automated CAPTCHA solving and unblocking
+- 99.3%+ success rate with automated [CAPTCHA solving](https://brightdata.com/products/web-unlocker/captcha-solver) and unblocking
 
 ## How it works
 
 <Info>
-Example Implementation: Flight status: Travel booking platforms, airline chatbots, corporate travel management systems accessing live flight data
+  Example Implementation: Flight status: Travel booking platforms, airline
+  chatbots, corporate travel management systems accessing live flight data
 </Info>
 
 1. **Input Layer:** Accepts user or system queries via REST API, chat interface, or automation triggers.
 
-2. **AI Orchestration:** LLM or rules-driven planner interprets intent, builds an execution plan, and dynamically selects sources.
+2. **AI Orchestration:** LLM or rules-driven planner interprets intent, builds an execution plan, dynamically selects sources and coordinates multi-agent workflows using AI agent frameworks like [**CrewAI**](https://docs.brightdata.com/integrations/crew-ai), [**Agno**](https://docs.brightdata.com/integrations/agno), [**LangChain**](https://docs.brightdata.com/integrations/langchain), [**Vercel Ai SDK**](https://docs.brightdata.com/integrations/vercel-ai-sdk) and [more](https://docs.brightdata.com/ai-integrations).
 
 3. **Source & Workflow Runner:** Executes calls to primary, secondary, or tertiary data sources for redundancy.
 
-4. **Data Access Layer:** Uses **[Web Unlocker](https://brightdata.com/products/web-unlocker)** for resilient data access (handles blocks, CAPTCHAs, rate limits automatically).  
+4. **Data Access Layer:** Uses **[Web Unlocker](https://brightdata.com/products/web-unlocker)** for resilient data access (handles blocks, CAPTCHAs, rate limits automatically).
 
 5. **AI Analysis:** Synthesizes data, interprets it, and structures clean responses using LLMs.
 
-6. **Output Layer:** Returns the final, structured output to the requesting app, chat, or API.
+6. **Output Layer:** Returns the final, structured output to the requesting app, chat interface, or API endpoint.
 
 ## Best Practices
 
-- Use **[Browser API](https://brightdata.com/products/scraping-browser)** for robust automation and unblocking at scale.
-- Use **Web Unlocker** for fast, non-interactive data extraction with automatic proxy and CAPTCHA handling.
-- Enable **async mode** for high concurrency (scale beyond 1K jobs)
+- Use [**Browser API**](https://brightdata.com/products/scraping-browser) for robust automation and unblocking at scale, especially for complex workflows.
+- Use [**Web Unlocker**](https://brightdata.com/products/web-unlocker) for fast, non-interactive data extraction with automatic [proxy](https://docs.brightdata.com/proxy-networks/introduction) and CAPTCHA handling.
+- Enable **async mode** for high concurrency (scale beyond 1K jobs).
 - Proactively switch between endpoints/browsing when encountering failures/blocks
-
-## Example: Real-Time Flight Status Agent
-
-A global travel platform uses this architecture to process flight queries like “AA1234”:
-
-1. The agent detects the flight intent and identifies data sources (airline site, flight tracker, airport API).  
-2. It queries multiple live endpoints in parallel to ensure redundancy.  
-3. The **Web Unlocker** automatically solves CAPTCHAs and handles rate limits.  
-4. The **AI Analysis Layer** aggregates the verified data.  
-5. A clean, structured response is returned instantly to chat or app interfaces.
 
 ## Standard vs Bright Data Infrastructure
 
 <CardGroup cols={2}>
 
   <Card title="STANDARD INFRASTRUCTURE" icon="sparkles" href="#">
-    60% failure rate on airline websites due to anti-bot and rate limits  
+    60% failure rate on airline websites due to anti-bot and rate limits
 
-    CAPTCHA challenges stop agents completely  
+    CAPTCHA challenges stop agents completely
 
-    Rate limiting blocks real-time scaling  
+    Rate limiting blocks real-time scaling
 
-    Frequent timeouts during peak travel or high concurrency  
+    Frequent timeouts during peak travel or high concurrency
 
     No SLA or compliance for business-critical apps
+
   </Card>
   
   <Card title="BRIGHT DATA INFRASTRUCTURE" icon="rocket" href="#">
-    99.3%+ success rate with automated CAPTCHA solving and unblocking  
+    99.3%+ success rate with automated CAPTCHA solving and unblocking
 
-    Real-time flight data access at global scale  
+    Real-time flight data access at global scale
 
-    1,000+ concurrent flight queries with 99.99% uptime  
+    1,000+ concurrent flight queries with 99.99% uptime
 
-    Sub-second response times, even under peak load  
+    Sub-second response times, even under peak load
 
     Global proxy network with automated management
+
   </Card>
 </CardGroup>
 
+## Example: Real-Time Flight Status Agent
 
+A global travel platform uses this architecture to process flight queries like “AA1234”:
+
+1. The agent detects the flight intent and identifies data sources (airline site, flight tracker, airport API).
+2. It queries multiple live endpoints in parallel to ensure redundancy.
+3. Automatic CAPTCHA solving and proxy rotation handles blocks and rate limits.
+4. The **AI Analysis Layer** aggregates the verified data from all sources.
+5. A clean, structured response is returned instantly to chat or app interfaces.

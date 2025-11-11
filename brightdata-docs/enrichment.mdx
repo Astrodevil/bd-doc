@@ -1,34 +1,30 @@
 ---
 title: "Data Enrichment Agent Architecture"
-description: "Architecture and best practices for sales or marketing agent workflows that need automated data completion and lead enrichment."
+description: "Architecture and best practices for AI engineers building scalable table enrichment systems that automatically complete, validate, and standardize structured data across any domain."
 ---
 
 <Frame>![Diagram](./enrichment-agent-diagram.png)</Frame>
 
-Modern sales and operations teams need automated systems that can enrich CRM and lead data continuously, adding verified contacts, company details, and metadata from multiple sources with speed, accuracy, and compliance.
+AI engineers need enrichment agents that can analyze, verify, and standardize structured data across domains—from CRM databases and customer records to product catalogs, research tables, and analytics datasets—with speed, accuracy, and consistency at scale.
 
 ## Overview
 
-The **Data Enrichment Agent Architecture** powers automated, enterprise-scale enrichment for CRM and lead data with real-time and batch workflows.
+The Data Enrichment Agent Architecture enables large-scale, automated enrichment of any table or dataset. It's designed for **AI engineers** building intelligent systems that need to complete, validate, and normalize structured data reliably.
 
-- Ingests and validates raw records from CRM, marketing, or internal data sources  
-- Enriches each record with verified company, contact, or firmographic data  
-- Normalizes formats for clean, deduplicated records  
-- Returns structured outputs ready for downstream analytics or AI pipelines  
+- Ingests and validates raw rows from internal systems, APIs, or batch uploads
+- Enriches missing fields using verified company, product, or metadata sources
+- Normalizes and deduplicates entries for clean, consistent tables
+- Outputs structured, ready-to-use data for analytics pipelines, ML features, or business systems
 
 ## How it works
 
-<Info>
-Example implementations: Clay.com enrichment pipelines, Apollo.io contact discovery, ZoomInfo-style lead completion platforms
-</Info>
-
 1. **Input Layer:** Ingests records via API, CSV upload, or message queues.
 
-2. **Orchesration Layer:** Consist of enrichment and batch processing, also cleans and standardizes fields like emails, domains and metadata. 
+2. **Orchestration Layer:** Coordinates enrichment workflows, batch processing across parallel jobsand coordinates multi-agent workflows using AI agent frameworks like [**CrewAI**](https://docs.brightdata.com/integrations/crew-ai), [**Agno**](https://docs.brightdata.com/integrations/agno), [**LangChain**](https://docs.brightdata.com/integrations/langchain), [**Vercel Ai SDK**](https://docs.brightdata.com/integrations/vercel-ai-sdk) and [more](https://docs.brightdata.com/ai-integrations).
 
 3. **Discovery Layer:** Uses Bright Data’s [**SERP API**](https://brightdata.com/products/serp-api) and search for company name, urls and also rank sources by relevence and authority.
 
-4. **Extraction Layer:** Uses **Web Unlocker** to extract data from websites and bypass blocking. Also extracts pre-structured datasets from websites like LinkedIn, Cruncbase, etc.
+4. **Extraction Layer:** Uses [**Web Unlocker**](https://brightdata.com/products/web-unlocker) to extract data from websites and bypass blocking. Also extracts pre-structured datasets from websites like LinkedIn, Cruncbase, etc.
 
 5. **Processing Layer:** Validates data layer and takes care of enriched data by injecting into existing workflow.
 
@@ -39,48 +35,71 @@ Example implementations: Clay.com enrichment pipelines, Apollo.io contact discov
 <CardGroup cols={2}>
 
   <Card title="STANDARD SCRAPING STACK" icon="sparkles" href="#">
-    ~50% success on LinkedIn profiles due to anti-bot measures  
+    ~50% success on LinkedIn profiles due to anti-bot measures
 
-    Slow SERP responses (2–5 seconds) limit throughput  
+    Slow SERP responses (2–5 seconds) limit throughput
 
-    Rate limits and IP bans break batch processing at scale  
+    Rate limits and IP bans break batch processing at scale
 
-    Manual proxy management increases operational risk  
+    Manual proxy management increases operational risk
 
-    No enterprise compliance or monitoring  
+    No enterprise compliance or monitoring
 
     Unreliable beyond 1K concurrent enrichment jobs
+
   </Card>
   
   <Card title="BRIGHT DATA STACK" icon="rocket" href="#">
-    95%+ enrichment success, including protected sites  
+    95%+ enrichment success, including protected sites
 
-    50K+ concurrent extractions with 99.99% uptime  
+    50K+ concurrent extractions with 99.99% uptime
 
-    Automated proxy rotation, unblocking, and CAPTCHA solving  
+    Automated proxy rotation, unblocking, and CAPTCHA solving
 
-    GDPR/CCPA-ready with enterprise-grade security controls  
+    GDPR/CCPA-ready with enterprise-grade security controls
 
-    Global proxy network (150M+ IPs) for broad market coverage  
+    Global proxy network (150M+ IPs) for broad market coverage
 
     Trusted by Fortune 500s for mission-critical enrichment
+
   </Card>
-</CardGroup> 
+</CardGroup>
 
 ## Best Practices
 
-- Use **Web Unlocker** for fast, non-interactive enrichment with automatic proxy and CAPTCHA handling.
+- Use [**Web Unlocker**](https://brightdata.com/products/web-unlocker) for fast, non-interactive enrichment with automatic proxy and [CAPTCHA](https://brightdata.com/products/web-unlocker/captcha-solver) handling.
 - Enable **async mode** for high-throughput batch jobs and to avoid rate limits (scale beyond 1K+ parallel jobs).
-- Use **Browser API** for interactive sites (logins, scrolling, dynamic content) and advanced workflows.
+- Use [**Browser API**](https://brightdata.com/products/scraping-browser) for interactive sites (logins, scrolling, dynamic content) and advanced workflows.
 - Troubleshoot by switching to Browser API if API endpoints fail or get blocked.
 
+## Example Use Cases
 
-## Example: CRM Lead Enrichment Agent
+### CRM Lead Enrichment
 
 A sales operations team uses this architecture to automatically complete CRM records:
 
-1. Ingests incomplete CRM data (e.g., name, email, domain).  
-2. Enriches missing data via Web Unlocker and Browser API.  
-3. Validates and merges results from multiple data providers.  
-4. Caches enriched fields and embeddings for future use.  
+1. Ingests incomplete CRM data (e.g., name, email, domain).
+2. Enriches missing data via Web Unlocker and Browser API.
+3. Validates and merges results from multiple data providers.
+4. Caches enriched fields and embeddings for future use.
 5. Pushes clean, verified data back to the CRM or BI system.
+
+### Product Catalog Enrichment
+
+An e-commerce team enriches product databases by:
+
+1. Ingesting incomplete product records (SKU, name, category).
+2. Scraping pricing, competitor data, and availability from live sources.
+3. Merging and deduplicating entries across multiple vendors.
+4. Generating product descriptions, specifications, and metadata.
+5. Syncing enriched catalogs to inventory and recommendation systems.
+
+### Research Data Normalization
+
+A data analytics team enriches research tables by:
+
+1. Ingesting raw data from multiple CSV files or APIs.
+2. Extracting and validating company information, rankings, or trends.
+3. Normalizing inconsistent formats and filling missing values.
+4. Enriching with external APIs and verified data sources.
+5. Outputting clean, deduplicated datasets for analytics pipelines and ML models.
